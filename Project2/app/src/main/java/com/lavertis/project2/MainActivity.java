@@ -1,5 +1,6 @@
 package com.lavertis.project2;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.lavertis.project2.data.PhoneSeedData;
 import com.lavertis.project2.data.PhoneViewModel;
 import com.lavertis.project2.recycler_views.PhoneListAdapter;
@@ -58,5 +60,10 @@ public class MainActivity extends AppCompatActivity {
             sets the changed list of items in the adapter will be called
          */
         phoneViewModel.getAllPhones().observe(this, phones -> adapter.setPhoneList(phones));
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(view -> startActivity(
+                new Intent(MainActivity.this, AddPhoneActivity.class))
+        );
     }
 }
