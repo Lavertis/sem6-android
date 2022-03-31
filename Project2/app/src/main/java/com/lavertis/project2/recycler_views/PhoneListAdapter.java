@@ -18,10 +18,24 @@ import java.util.List;
 public class PhoneListAdapter extends RecyclerView.Adapter<PhoneListAdapter.PhoneViewHolder> {
     private final LayoutInflater layoutInflater;
     private List<Phone> phoneList;
+    private final OnItemClickListener onItemClickListener;
 
-    public PhoneListAdapter(Activity context) {
+    public PhoneListAdapter(Activity context, OnItemClickListener onItemClickListener) {
         layoutInflater = context.getLayoutInflater();
         phoneList = null;
+        this.onItemClickListener = onItemClickListener;
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull PhoneViewHolder holder, int position) {
+        holder.brandTextView.setText(phoneList.get(position).getManufacturer());
+        holder.modelTextView.setText(phoneList.get(position).getModel());
+
+        holder.itemView.setOnClickListener(v -> onItemClickListener.onItemClickListener(phoneList.get(position)));
+    }
+
+    public Phone getPhoneAt(int position) {
+        return phoneList.get(position);
     }
 
     @NonNull
@@ -31,10 +45,8 @@ public class PhoneListAdapter extends RecyclerView.Adapter<PhoneListAdapter.Phon
         return new PhoneViewHolder(row);
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull PhoneViewHolder holder, int position) {
-        holder.brandTextView.setText(phoneList.get(position).getManufacturer());
-        holder.modelTextView.setText(phoneList.get(position).getModel());
+    public interface OnItemClickListener {
+        void onItemClickListener(Phone phone);
     }
 
     @Override

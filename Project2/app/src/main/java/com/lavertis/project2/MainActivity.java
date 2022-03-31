@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,7 +23,8 @@ public class MainActivity extends AppCompatActivity {
     private PhoneListAdapter adapter;
     private PhoneViewModel phoneViewModel;
 
-    private final int ADD_PHONE_ACTIVITY_REQUEST_CODE = 123;
+    private final int ADD_PHONE_ACTIVITY_REQUEST_CODE = 111;
+    private final int EDIT_PHONE_ACTIVITY_REQUEST_CODE = 222;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -50,11 +52,36 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView,
+                                  @NonNull RecyclerView.ViewHolder viewHolder,
+                                  @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                int adapterPosition = viewHolder.getAdapterPosition();
+                Phone phone = adapter.getPhoneAt(adapterPosition);
+                phoneViewModel.deletePhone(phone);
+            }
+        });
+
         // setting an adapter on a list, setting the Layout of list items
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        adapter = new PhoneListAdapter(this);
+        adapter = new PhoneListAdapter(this, phone -> {
+            Intent intent = new Intent(this, EditPhoneActivity.class);
+            intent.putExtra("phone", phone);
+            startActivityForResult(intent, EDIT_PHONE_ACTIVITY_REQUEST_CODE);
+            System.out.println("Clicked on " + phone.getManufacturer() + " " + phone.getModel());
+        });
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        // attach itemTouchHelper to recyclerView
+        itemTouchHelper.attachToRecyclerView(recyclerView);
 
         // read the view model from the provider
         phoneViewModel = new ViewModelProvider(this).get(PhoneViewModel.class);
@@ -84,6 +111,13 @@ public class MainActivity extends AppCompatActivity {
                     phoneViewModel.insertPhone(phone);
                 }
                 break;
+            }
+            case (EDIT_PHONE_ACTIVITY_REQUEST_CODE): {
+                if (resultCode == RESULT_OK && data != null) {
+                    // TODO Extract the data returned from the child Activity.
+                    Phone phone = (Phone) data.getExtras().get("phone");
+                    phoneViewModel.updatePhone(phone);
+                }
             }
         }
     }

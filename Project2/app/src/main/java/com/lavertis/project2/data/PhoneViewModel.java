@@ -18,6 +18,10 @@ public class PhoneViewModel extends AndroidViewModel {
         allPhones = phoneRepository.selectAllPhones();
     }
 
+    public LiveData<List<Phone>> getAllPhones() {
+        return allPhones;
+    }
+
     public void insertPhone(Phone phone) {
         phoneRepository.insertPhone(phone);
     }
@@ -26,8 +30,12 @@ public class PhoneViewModel extends AndroidViewModel {
         phoneRepository.insertAllPhones(phoneList);
     }
 
-    public LiveData<List<Phone>> getAllPhones() {
-        return allPhones;
+    public void updatePhone(Phone phone) {
+        phoneRepository.updatePhone(phone);
+    }
+
+    public void deletePhone(Phone phone) {
+        phoneRepository.deletePhone(phone);
     }
 
     public void deleteAllPhones() {

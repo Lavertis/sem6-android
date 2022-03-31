@@ -10,9 +10,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.lavertis.project2.data.Phone;
 
-public class AddPhoneActivity extends AppCompatActivity {
+public class EditPhoneActivity extends AppCompatActivity {
     Button cancelButton;
-    Button saveButton;
+    Button updateButton;
     Button websiteButton;
 
     EditText phoneManufacturer;
@@ -20,22 +20,33 @@ public class AddPhoneActivity extends AppCompatActivity {
     EditText androidVersion;
     EditText website;
 
+    Phone phone;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_phone);
+        setContentView(R.layout.activity_edit_phone);
+
+        Intent intent = getIntent();
+        phone = (Phone) intent.getExtras().get("phone");
 
         phoneManufacturer = findViewById(R.id.manufacturerEditText);
         phoneModel = findViewById(R.id.modelEditText);
         androidVersion = findViewById(R.id.androidVersionEditText);
         website = findViewById(R.id.websiteEditText);
 
+        phoneManufacturer.setText(phone.getManufacturer());
+        phoneModel.setText(phone.getModel());
+        androidVersion.setText(String.valueOf(phone.getAndroidVersion()));
+        website.setText(phone.getWebsite());
+
         cancelButton = findViewById(R.id.cancelButton);
         cancelButton.setOnClickListener(v -> finish());
 
-        saveButton = findViewById(R.id.saveButton);
-        saveButton.setOnClickListener(v -> {
-            Phone phone = new Phone();
+        websiteButton = findViewById(R.id.websiteButton);
+
+        updateButton = findViewById(R.id.updateButton);
+        updateButton.setOnClickListener(v -> {
             phone.setManufacturer(phoneManufacturer.getText().toString());
             phone.setModel(phoneModel.getText().toString());
             phone.setAndroidVersion(Integer.parseInt(androidVersion.getText().toString()));
@@ -50,10 +61,10 @@ public class AddPhoneActivity extends AppCompatActivity {
         websiteButton.setOnClickListener(v -> {
             String url = website.getText().toString();
             if (!url.startsWith("http://") && !url.startsWith("https://")) {
-                url = "https://" + url;
+                url = "http://" + url;
             }
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-            startActivity(intent);
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            startActivity(browserIntent);
         });
 
         setFocusListeners();
