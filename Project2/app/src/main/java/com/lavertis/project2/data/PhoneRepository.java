@@ -16,19 +16,19 @@ public class PhoneRepository {
         allPhones = phoneDao.getAll();
     }
 
-    public void addPhone(Phone phone) {
+    public void insertPhone(Phone phone) {
         PhoneDatabase.databaseWriteExecutor.execute(() -> phoneDao.insert(phone));
     }
 
-    public void addAllPhones(List<Phone> phoneList) {
+    public void insertAllPhones(List<Phone> phoneList) {
         PhoneDatabase.databaseWriteExecutor.execute(() -> phoneDao.insertAll(phoneList));
     }
 
-    public LiveData<List<Phone>> getAllPhones() {
+    public LiveData<List<Phone>> selectAllPhones() {
         return allPhones;
     }
 
-    public void deleteAll() {
+    public void deleteAllPhones() {
         PhoneDatabase.databaseWriteExecutor.execute(phoneDao::truncate);
     }
 }

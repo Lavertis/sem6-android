@@ -1,15 +1,19 @@
 package com.lavertis.project2;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.lavertis.project2.data.Phone;
 import com.lavertis.project2.data.PhoneSeedData;
 import com.lavertis.project2.data.PhoneViewModel;
 import com.lavertis.project2.recycler_views.PhoneListAdapter;
@@ -17,6 +21,8 @@ import com.lavertis.project2.recycler_views.PhoneListAdapter;
 public class MainActivity extends AppCompatActivity {
     private PhoneListAdapter adapter;
     private PhoneViewModel phoneViewModel;
+
+    private final int ADD_PHONE_ACTIVITY_REQUEST_CODE = 123;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -29,10 +35,10 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.clearAllDataItem) {
-            phoneViewModel.deleteAll();
+            phoneViewModel.deleteAllPhones();
             return true;
         } else if (id == R.id.addDataItem) {
-            phoneViewModel.addAllPhones(PhoneSeedData.phoneList);
+            phoneViewModel.insertAllPhones(PhoneSeedData.phoneList);
             return true;
         }
 
@@ -58,5 +64,27 @@ public class MainActivity extends AppCompatActivity {
             sets the changed list of items in the adapter will be called
          */
         phoneViewModel.getAllPhones().observe(this, phones -> adapter.setPhoneList(phones));
+
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(view -> {
+                    Intent intent = new Intent(this, AddPhoneActivity.class);
+                    startActivityForResult(intent, ADD_PHONE_ACTIVITY_REQUEST_CODE);
+                }
+        );
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case (ADD_PHONE_ACTIVITY_REQUEST_CODE): {
+                if (resultCode == RESULT_OK && data != null) {
+                    // TODO Extract the data returned from the child Activity.
+                    Phone phone = (Phone) data.getExtras().get("phone");
+                    phoneViewModel.insertPhone(phone);
+                }
+                break;
+            }
+        }
     }
 }

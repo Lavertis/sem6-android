@@ -1,26 +1,50 @@
 package com.lavertis.project2.data;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "phones")
-public class Phone {
+public class Phone implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     private long id;
 
-    private String brand;
+    public static final Creator<Phone> CREATOR = new Creator<Phone>() {
+        @Override
+        public Phone createFromParcel(Parcel in) {
+            return new Phone(in);
+        }
+
+        @Override
+        public Phone[] newArray(int size) {
+            return new Phone[size];
+        }
+    };
 
     private String model;
 
     private int androidVersion;
+    private String manufacturer;
+    private String website;
 
-    private String websiteUrl;
+    public Phone() {
+    }
 
-    public Phone(String brand, String model, int androidVersion, String websiteUrl) {
-        this.brand = brand;
+    public Phone(String manufacturer, String model, int androidVersion, String website) {
+        this.manufacturer = manufacturer;
         this.model = model;
         this.androidVersion = androidVersion;
-        this.websiteUrl = websiteUrl;
+        this.website = website;
+    }
+
+    protected Phone(Parcel in) {
+        id = in.readLong();
+        manufacturer = in.readString();
+        model = in.readString();
+        androidVersion = in.readInt();
+        website = in.readString();
     }
 
     public long getId() {
@@ -31,12 +55,12 @@ public class Phone {
         this.id = id;
     }
 
-    public String getBrand() {
-        return brand;
+    public String getManufacturer() {
+        return manufacturer;
     }
 
-    public void setBrand(String brand) {
-        this.brand = brand;
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
     }
 
     public String getModel() {
@@ -55,11 +79,25 @@ public class Phone {
         this.androidVersion = androidVersion;
     }
 
-    public String getWebsiteUrl() {
-        return websiteUrl;
+    public String getWebsite() {
+        return website;
     }
 
-    public void setWebsiteUrl(String websiteUrl) {
-        this.websiteUrl = websiteUrl;
+    public void setWebsite(String website) {
+        this.website = website;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeLong(id);
+        parcel.writeString(manufacturer);
+        parcel.writeString(model);
+        parcel.writeInt(androidVersion);
+        parcel.writeString(website);
     }
 }
