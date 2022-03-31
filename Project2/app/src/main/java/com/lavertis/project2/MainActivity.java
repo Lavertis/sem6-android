@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,7 +19,7 @@ import com.lavertis.project2.data.PhoneSeedData;
 import com.lavertis.project2.data.PhoneViewModel;
 import com.lavertis.project2.recycler_views.PhoneListAdapter;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements PhoneListAdapter.onItemClickListener {
     private PhoneListAdapter adapter;
     private PhoneViewModel phoneViewModel;
 
@@ -50,11 +51,31 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView,
+                                  @NonNull RecyclerView.ViewHolder viewHolder,
+                                  @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                int adapterPosition = viewHolder.getAdapterPosition();
+                Phone phone = adapter.getPhoneAt(adapterPosition);
+                phoneViewModel.deletePhone(phone);
+            }
+        });
+
         // setting an adapter on a list, setting the Layout of list items
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         adapter = new PhoneListAdapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        // attach itemTouchHelper to recyclerView
+        itemTouchHelper.attachToRecyclerView(recyclerView);
 
         // read the view model from the provider
         phoneViewModel = new ViewModelProvider(this).get(PhoneViewModel.class);
@@ -86,5 +107,10 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
         }
+    }
+
+    @Override
+    public void onItemClick(Phone phone) {
+
     }
 }

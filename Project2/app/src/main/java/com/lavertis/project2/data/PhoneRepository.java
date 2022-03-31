@@ -16,6 +16,10 @@ public class PhoneRepository {
         allPhones = phoneDao.getAll();
     }
 
+    public LiveData<List<Phone>> selectAllPhones() {
+        return allPhones;
+    }
+
     public void insertPhone(Phone phone) {
         PhoneDatabase.databaseWriteExecutor.execute(() -> phoneDao.insert(phone));
     }
@@ -24,8 +28,12 @@ public class PhoneRepository {
         PhoneDatabase.databaseWriteExecutor.execute(() -> phoneDao.insertAll(phoneList));
     }
 
-    public LiveData<List<Phone>> selectAllPhones() {
-        return allPhones;
+    public void updatePhone(Phone phone) {
+        PhoneDatabase.databaseWriteExecutor.execute(() -> phoneDao.update(phone));
+    }
+
+    public void deletePhone(Phone phone) {
+        PhoneDatabase.databaseWriteExecutor.execute(() -> phoneDao.delete(phone));
     }
 
     public void deleteAllPhones() {

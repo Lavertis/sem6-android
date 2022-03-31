@@ -19,9 +19,16 @@ public class PhoneListAdapter extends RecyclerView.Adapter<PhoneListAdapter.Phon
     private final LayoutInflater layoutInflater;
     private List<Phone> phoneList;
 
+    private final onItemClickListener listener;
+
     public PhoneListAdapter(Activity context) {
         layoutInflater = context.getLayoutInflater();
         phoneList = null;
+        listener = (onItemClickListener) context;
+    }
+
+    public Phone getPhoneAt(int position) {
+        return phoneList.get(position);
     }
 
     @NonNull
@@ -44,13 +51,17 @@ public class PhoneListAdapter extends RecyclerView.Adapter<PhoneListAdapter.Phon
         return 0;
     }
 
+    public interface onItemClickListener {
+        void onItemClick(Phone phone);
+    }
+
     @SuppressLint("NotifyDataSetChanged")
     public void setPhoneList(List<Phone> phoneList) {
         this.phoneList = phoneList;
         notifyDataSetChanged();
     }
 
-    static class PhoneViewHolder extends RecyclerView.ViewHolder {
+    static class PhoneViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView brandTextView;
         TextView modelTextView;
@@ -59,6 +70,12 @@ public class PhoneListAdapter extends RecyclerView.Adapter<PhoneListAdapter.Phon
             super(itemView);
             brandTextView = itemView.findViewById(R.id.brandTextView);
             modelTextView = itemView.findViewById(R.id.modelTextView);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            notifyAll();
         }
     }
 }
