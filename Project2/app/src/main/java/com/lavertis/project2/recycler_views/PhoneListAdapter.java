@@ -33,7 +33,7 @@ public class PhoneListAdapter extends RecyclerView.Adapter<PhoneListAdapter.Phon
 
     @Override
     public void onBindViewHolder(@NonNull PhoneViewHolder holder, int position) {
-        holder.brandTextView.setText(phoneList.get(position).getBrand());
+        holder.brandTextView.setText(phoneList.get(position).getManufacturer());
         holder.modelTextView.setText(phoneList.get(position).getModel());
     }
 

@@ -25,7 +25,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="Manufacturer" />
+                android:labelFor="@id/manufacturerEditText"
+                android:text="@string/manufacturer_label" />
 
             <EditText
                 android:id="@+id/manufacturerEditText"
@@ -35,10 +36,11 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
+                android:autofillHints=""
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
-                android:text="Name" />
+                tools:ignore="SpeakableTextPresentCheck,DuplicateSpeakableTextCheck" />
         </TableRow>
 
         <TableRow
@@ -51,7 +53,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="Model" />
+                android:labelFor="@id/modelEditText"
+                android:text="@string/model_label" />
 
             <EditText
                 android:id="@+id/modelEditText"
@@ -61,10 +64,11 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_weight="1"
+                android:autofillHints=""
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
-                android:text="Name" />
+                tools:ignore="SpeakableTextPresentCheck,DuplicateSpeakableTextCheck" />
         </TableRow>
 
         <TableRow
@@ -77,7 +81,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="Android version" />
+                android:labelFor="@id/androidVersionEditText"
+                android:text="@string/android_version_label" />
 
             <EditText
                 android:id="@+id/androidVersionEditText"
@@ -87,23 +92,25 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_weight="1"
+                android:autofillHints=""
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
-                android:text="Name" />
+                tools:ignore="SpeakableTextPresentCheck,DuplicateSpeakableTextCheck" />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="bottom|center_horizontal|left">
+            android:gravity="bottom">
 
             <TextView
                 android:id="@+id/websiteLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="Website" />
+                android:labelFor="@id/websiteEditText"
+                android:text="@string/website_label" />
 
             <EditText
                 android:id="@+id/websiteEditText"
@@ -113,10 +120,11 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_weight="1"
+                android:autofillHints=""
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
-                android:text="Name" />
+                tools:ignore="SpeakableTextPresentCheck,DuplicateSpeakableTextCheck" />
         </TableRow>
 
     </TableLayout>
@@ -127,7 +135,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_weight="0"
-        android:text="save"
+        android:text="@string/save_button_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/cancelButton"
         app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
@@ -138,7 +146,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_weight="0"
-        android:text="cancel"
+        android:text="@string/cancel_button_text"
         app:layout_constraintEnd_toStartOf="@+id/saveButton"
         app:layout_constraintStart_toEndOf="@+id/webSiteButton"
         app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
@@ -149,7 +157,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_weight="0"
-        android:text="web site"
+        android:text="@string/web_site_button_text"
         app:layout_constraintEnd_toStartOf="@+id/cancelButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tableLayout" />

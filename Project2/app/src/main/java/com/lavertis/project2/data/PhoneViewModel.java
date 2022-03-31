@@ -15,18 +15,22 @@ public class PhoneViewModel extends AndroidViewModel {
     public PhoneViewModel(@NonNull Application application) {
         super(application);
         phoneRepository = new PhoneRepository(application);
-        allPhones = phoneRepository.getAllPhones();
+        allPhones = phoneRepository.selectAllPhones();
     }
 
-    public void addAllPhones(List<Phone> phoneList) {
-        phoneRepository.addAllPhones(phoneList);
+    public void insertPhone(Phone phone) {
+        phoneRepository.insertPhone(phone);
+    }
+
+    public void insertAllPhones(List<Phone> phoneList) {
+        phoneRepository.insertAllPhones(phoneList);
     }
 
     public LiveData<List<Phone>> getAllPhones() {
         return allPhones;
     }
 
-    public void deleteAll() {
-        phoneRepository.deleteAll();
+    public void deleteAllPhones() {
+        phoneRepository.deleteAllPhones();
     }
 }
