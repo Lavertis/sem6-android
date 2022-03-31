@@ -1,6 +1,7 @@
 package com.lavertis.project2;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,6 +13,7 @@ import com.lavertis.project2.data.Phone;
 public class EditPhoneActivity extends AppCompatActivity {
     Button cancelButton;
     Button updateButton;
+    Button websiteButton;
 
     EditText phoneManufacturer;
     EditText phoneModel;
@@ -41,6 +43,8 @@ public class EditPhoneActivity extends AppCompatActivity {
         cancelButton = findViewById(R.id.cancelButton);
         cancelButton.setOnClickListener(v -> finish());
 
+        websiteButton = findViewById(R.id.websiteButton);
+
         updateButton = findViewById(R.id.updateButton);
         updateButton.setOnClickListener(v -> {
             phone.setManufacturer(phoneManufacturer.getText().toString());
@@ -51,6 +55,16 @@ public class EditPhoneActivity extends AppCompatActivity {
             resultIntent.putExtra("phone", phone);
             setResult(RESULT_OK, resultIntent);
             finish();
+        });
+
+        websiteButton = findViewById(R.id.websiteButton);
+        websiteButton.setOnClickListener(v -> {
+            String url = website.getText().toString();
+            if (!url.startsWith("http://") && !url.startsWith("https://")) {
+                url = "http://" + url;
+            }
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            startActivity(browserIntent);
         });
     }
 }

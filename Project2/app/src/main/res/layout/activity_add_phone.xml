@@ -148,11 +148,11 @@
         android:layout_weight="0"
         android:text="@string/cancel_button_text"
         app:layout_constraintEnd_toStartOf="@+id/saveButton"
-        app:layout_constraintStart_toEndOf="@+id/webSiteButton"
+        app:layout_constraintStart_toEndOf="@+id/websiteButton"
         app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
 
     <Button
-        android:id="@+id/webSiteButton"
+        android:id="@+id/websiteButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
