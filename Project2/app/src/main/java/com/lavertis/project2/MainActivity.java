@@ -23,7 +23,8 @@ public class MainActivity extends AppCompatActivity {
     private PhoneListAdapter adapter;
     private PhoneViewModel phoneViewModel;
 
-    private final int ADD_PHONE_ACTIVITY_REQUEST_CODE = 123;
+    private final int ADD_PHONE_ACTIVITY_REQUEST_CODE = 111;
+    private final int EDIT_PHONE_ACTIVITY_REQUEST_CODE = 222;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -70,7 +71,12 @@ public class MainActivity extends AppCompatActivity {
 
         // setting an adapter on a list, setting the Layout of list items
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        adapter = new PhoneListAdapter(this, phone -> System.out.println("Clicked on " + phone.getModel()));
+        adapter = new PhoneListAdapter(this, phone -> {
+            Intent intent = new Intent(this, EditPhoneActivity.class);
+            intent.putExtra("phone", phone);
+            startActivityForResult(intent, EDIT_PHONE_ACTIVITY_REQUEST_CODE);
+            System.out.println("Clicked on " + phone.getManufacturer() + " " + phone.getModel());
+        });
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -105,6 +111,13 @@ public class MainActivity extends AppCompatActivity {
                     phoneViewModel.insertPhone(phone);
                 }
                 break;
+            }
+            case (EDIT_PHONE_ACTIVITY_REQUEST_CODE): {
+                if (resultCode == RESULT_OK && data != null) {
+                    // TODO Extract the data returned from the child Activity.
+                    Phone phone = (Phone) data.getExtras().get("phone");
+                    phoneViewModel.updatePhone(phone);
+                }
             }
         }
     }

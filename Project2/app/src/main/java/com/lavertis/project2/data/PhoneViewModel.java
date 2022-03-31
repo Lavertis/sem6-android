@@ -30,6 +30,10 @@ public class PhoneViewModel extends AndroidViewModel {
         phoneRepository.insertAllPhones(phoneList);
     }
 
+    public void updatePhone(Phone phone) {
+        phoneRepository.updatePhone(phone);
+    }
+
     public void deletePhone(Phone phone) {
         phoneRepository.deletePhone(phone);
     }

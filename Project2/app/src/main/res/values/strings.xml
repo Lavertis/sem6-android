@@ -12,4 +12,5 @@
     <string name="save_button_text">Save</string>
     <string name="cancel_button_text">Cancel</string>
     <string name="web_site_button_text">Website</string>
+    <string name="update_button_text">Update</string>
 </resources>
