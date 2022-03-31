@@ -18,13 +18,20 @@ import java.util.List;
 public class PhoneListAdapter extends RecyclerView.Adapter<PhoneListAdapter.PhoneViewHolder> {
     private final LayoutInflater layoutInflater;
     private List<Phone> phoneList;
+    private final OnItemClickListener onItemClickListener;
 
-    private final onItemClickListener listener;
-
-    public PhoneListAdapter(Activity context) {
+    public PhoneListAdapter(Activity context, OnItemClickListener onItemClickListener) {
         layoutInflater = context.getLayoutInflater();
         phoneList = null;
-        listener = (onItemClickListener) context;
+        this.onItemClickListener = onItemClickListener;
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull PhoneViewHolder holder, int position) {
+        holder.brandTextView.setText(phoneList.get(position).getManufacturer());
+        holder.modelTextView.setText(phoneList.get(position).getModel());
+
+        holder.itemView.setOnClickListener(v -> onItemClickListener.onItemClickListener(phoneList.get(position)));
     }
 
     public Phone getPhoneAt(int position) {
@@ -38,10 +45,8 @@ public class PhoneListAdapter extends RecyclerView.Adapter<PhoneListAdapter.Phon
         return new PhoneViewHolder(row);
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull PhoneViewHolder holder, int position) {
-        holder.brandTextView.setText(phoneList.get(position).getManufacturer());
-        holder.modelTextView.setText(phoneList.get(position).getModel());
+    public interface OnItemClickListener {
+        void onItemClickListener(Phone phone);
     }
 
     @Override
@@ -51,17 +56,13 @@ public class PhoneListAdapter extends RecyclerView.Adapter<PhoneListAdapter.Phon
         return 0;
     }
 
-    public interface onItemClickListener {
-        void onItemClick(Phone phone);
-    }
-
     @SuppressLint("NotifyDataSetChanged")
     public void setPhoneList(List<Phone> phoneList) {
         this.phoneList = phoneList;
         notifyDataSetChanged();
     }
 
-    static class PhoneViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    static class PhoneViewHolder extends RecyclerView.ViewHolder {
 
         TextView brandTextView;
         TextView modelTextView;
@@ -70,12 +71,6 @@ public class PhoneListAdapter extends RecyclerView.Adapter<PhoneListAdapter.Phon
             super(itemView);
             brandTextView = itemView.findViewById(R.id.brandTextView);
             modelTextView = itemView.findViewById(R.id.modelTextView);
-            itemView.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View view) {
-            notifyAll();
         }
     }
 }

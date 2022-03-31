@@ -19,7 +19,7 @@ import com.lavertis.project2.data.PhoneSeedData;
 import com.lavertis.project2.data.PhoneViewModel;
 import com.lavertis.project2.recycler_views.PhoneListAdapter;
 
-public class MainActivity extends AppCompatActivity implements PhoneListAdapter.onItemClickListener {
+public class MainActivity extends AppCompatActivity {
     private PhoneListAdapter adapter;
     private PhoneViewModel phoneViewModel;
 
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements PhoneListAdapter.
 
         // setting an adapter on a list, setting the Layout of list items
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        adapter = new PhoneListAdapter(this);
+        adapter = new PhoneListAdapter(this, phone -> System.out.println("Clicked on " + phone.getModel()));
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -107,10 +107,5 @@ public class MainActivity extends AppCompatActivity implements PhoneListAdapter.
                 break;
             }
         }
-    }
-
-    @Override
-    public void onItemClick(Phone phone) {
-
     }
 }
