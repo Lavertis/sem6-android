@@ -65,15 +65,6 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/fileSizeTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/zero"
-        app:layout_constraintEnd_toEndOf="@+id/fileTypeTextView"
-        app:layout_constraintTop_toBottomOf="@+id/downloadInfoButton" />
-
-    <TextView
         android:id="@+id/fileTypeTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -81,6 +72,26 @@
         android:text="@string/zero"
         app:layout_constraintEnd_toEndOf="@+id/bytesDownloadedTextView"
         app:layout_constraintTop_toBottomOf="@+id/fileSizeTextView" />
+
+    <TextView
+        android:id="@+id/bytesDownloadedTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/zero"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.837"
+        app:layout_constraintStart_toEndOf="@+id/bytesDownloadedLabel"
+        app:layout_constraintTop_toBottomOf="@+id/downloadFileButton" />
+
+    <TextView
+        android:id="@+id/fileSizeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/zero"
+        app:layout_constraintEnd_toEndOf="@+id/fileTypeTextView"
+        app:layout_constraintTop_toBottomOf="@+id/downloadInfoButton" />
 
     <Button
         android:id="@+id/downloadFileButton"
@@ -103,15 +114,5 @@
         app:layout_constraintBottom_toBottomOf="@+id/bytesDownloadedTextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/bytesDownloadedTextView" />
-
-    <TextView
-        android:id="@+id/bytesDownloadedTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/zero"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/bytesDownloadedLabel"
-        app:layout_constraintTop_toBottomOf="@+id/downloadFileButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
