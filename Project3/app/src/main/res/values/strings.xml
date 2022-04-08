@@ -8,4 +8,5 @@
     <string name="zero">0</string>
     <string name="bytes_downloaded_label">Bytes downloaded:</string>
     <string name="example_url">https://mirrors.edge.kernel.org/pub/linux/kernel/v5.x/linux-5.4.36.tar.xz</string>
+    <string name="notification_title">Downloading</string>
 </resources>

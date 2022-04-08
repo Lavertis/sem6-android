@@ -8,10 +8,10 @@ import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class AsynchronousTask extends AsyncTask<String, Void, FileInfo> {
+public class MyAsyncTask extends AsyncTask<String, Void, FileInfo> {
     private final WeakReference<Activity> weakActivity;
 
-    public AsynchronousTask(Activity activity) {
+    public MyAsyncTask(Activity activity) {
         this.weakActivity = new WeakReference<>(activity);
     }
 
