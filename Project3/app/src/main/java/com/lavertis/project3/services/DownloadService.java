@@ -1,4 +1,4 @@
-package com.lavertis.project3;
+package com.lavertis.project3.services;
 
 import android.app.IntentService;
 import android.app.Notification;
@@ -12,6 +12,10 @@ import android.os.Environment;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
+import com.lavertis.project3.MainActivity;
+import com.lavertis.project3.R;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -22,10 +26,13 @@ import java.net.URL;
 import java.net.URLConnection;
 
 public class DownloadService extends IntentService {
-    private static final String ACTION_DOWNLOAD_FILE = "com.lavertis.project3.action.download_file";
-    private static final String PARAM_DOWNLOAD_FILE = "com.lavertis.project3.extra.param_download_file";
+    public static final String NOTIFICATION = "com.lavertis.project3.services.DownloadService.NOTIFICATION";
+    public static final String INFO = "INFO";
     private static final int NOTIFICATION_ID = 1;
+    private static final String ACTION_DOWNLOAD_FILE = "com.lavertis.project3.services.DownloadService.action.download_file";
+    private static final String PARAM_DOWNLOAD_FILE = "com.lavertis.project3.services.DownloadService.extra.param_download_file";
     private NotificationManager mNotificationManager;
+
 
     public DownloadService() {
         super("MyIntentService");
@@ -74,13 +81,13 @@ public class DownloadService extends IntentService {
             OutputStream output = new FileOutputStream(path);
 
             byte[] data = new byte[1024];
-            long bytesDownloaded = 0;
+            int bytesDownloaded = 0;
             int count;
             while ((count = input.read(data)) != -1) {
                 bytesDownloaded += count;
                 output.write(data, 0, count);
-                System.out.println("Downloaded " + bytesDownloaded + " of " + bytesTotal);
                 Log.i("MyIntentService", "Downloaded " + bytesDownloaded + " of " + bytesTotal);
+                sendBroadcast(bytesDownloaded, bytesTotal);
             }
 
             // close streams
@@ -94,8 +101,6 @@ public class DownloadService extends IntentService {
     }
 
     private void setupNotificationChannel() {
-        NotificationManager mNotificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         CharSequence name = getString(R.string.app_name);
         NotificationChannel channel = new NotificationChannel(
                 getString(R.string.app_name), name, NotificationManager.IMPORTANCE_LOW);
@@ -120,5 +125,12 @@ public class DownloadService extends IntentService {
 
         notificationBuilder.setChannelId(getString(R.string.app_name));
         return notificationBuilder.build();
+    }
+
+    private void sendBroadcast(int bytesDownloaded, int bytesTotal) {
+        Intent intent = new Intent(NOTIFICATION);
+        intent.putExtra("downloaded", bytesDownloaded);
+        intent.putExtra("total", bytesTotal);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 }
