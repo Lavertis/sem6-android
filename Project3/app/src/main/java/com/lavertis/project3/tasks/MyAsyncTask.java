@@ -1,8 +1,11 @@
-package com.lavertis.project3;
+package com.lavertis.project3.tasks;
 
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.widget.TextView;
+
+import com.lavertis.project3.R;
+import com.lavertis.project3.models.FileInfo;
 
 import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;

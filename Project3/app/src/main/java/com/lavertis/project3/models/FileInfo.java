@@ -1,4 +1,4 @@
-package com.lavertis.project3;
+package com.lavertis.project3.models;
 
 public class FileInfo {
     private Integer size;
