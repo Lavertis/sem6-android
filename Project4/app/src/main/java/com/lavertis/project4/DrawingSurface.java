@@ -20,7 +20,7 @@ public class DrawingSurface extends SurfaceView implements SurfaceHolder.Callbac
     private final Path path = new Path();
     private final Paint pathPaint = new Paint();
     private final Paint dotPaint = new Paint();
-    private final int paintColor = Color.MAGENTA;
+    private int paintColor = Color.WHITE;
     private Thread thread;
     private boolean running;
     private Bitmap bitmap;
@@ -40,6 +40,13 @@ public class DrawingSurface extends SurfaceView implements SurfaceHolder.Callbac
         dotPaint.setAntiAlias(true);
         dotPaint.setColor(paintColor);
         dotPaint.setStyle(Paint.Style.FILL);
+    }
+
+    public void setPaintColor(int paintColor) {
+        this.paintColor = paintColor;
+        pathPaint.setColor(paintColor);
+        dotPaint.setColor(paintColor);
+        path.reset();
     }
 
     @Override
