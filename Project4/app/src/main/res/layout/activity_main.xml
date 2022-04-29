@@ -6,8 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <com.lavertis.project4.DrawingArea
-        android:id="@+id/drawingArea"
+    <com.lavertis.project4.DrawingSurface
+        android:id="@+id/DrawingSurface"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
