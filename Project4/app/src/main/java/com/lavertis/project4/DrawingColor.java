@@ -8,9 +8,9 @@ public enum DrawingColor {
     BLUE(Color.rgb(67, 97, 238)),
     YELLOW(Color.rgb(255, 214, 10));
 
-    public final int color;
+    public final int value;
 
-    DrawingColor(int color) {
-        this.color = color;
+    DrawingColor(int value) {
+        this.value = value;
     }
 }

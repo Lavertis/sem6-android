@@ -42,6 +42,15 @@ public class DrawingSurface extends SurfaceView implements SurfaceHolder.Callbac
         dotPaint.setStyle(Paint.Style.FILL);
     }
 
+    public void clear() {
+        synchronized (lock) {
+            if (canvas != null) {
+                canvas.drawColor(Color.BLACK);
+                path.reset();
+            }
+        }
+    }
+
     public void setPaintColor(int paintColor) {
         this.paintColor = paintColor;
         pathPaint.setColor(paintColor);
@@ -54,11 +63,13 @@ public class DrawingSurface extends SurfaceView implements SurfaceHolder.Callbac
         performClick();
         float x = event.getX();
         float y = event.getY();
+        int DOT_RADIUS = 18;
+
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN: {
                 Log.d(LOG_TAG, "ACTION_DOWN");
                 synchronized (lock) {
-                    canvas.drawCircle(x, y, 20, dotPaint);
+                    canvas.drawCircle(x, y, DOT_RADIUS, dotPaint);
                 }
                 path.moveTo(x, y);
                 return true;
@@ -74,7 +85,7 @@ public class DrawingSurface extends SurfaceView implements SurfaceHolder.Callbac
             case MotionEvent.ACTION_UP: {
                 Log.d(LOG_TAG, "ACTION_UP");
                 synchronized (lock) {
-                    canvas.drawCircle(x, y, 20, dotPaint);
+                    canvas.drawCircle(x, y, DOT_RADIUS, dotPaint);
                 }
                 return true;
             }

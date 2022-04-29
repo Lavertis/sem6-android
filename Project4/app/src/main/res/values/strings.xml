@@ -4,4 +4,5 @@
     <string name="yellow">Yellow</string>
     <string name="blue">Blue</string>
     <string name="green">Green</string>
+    <string name="action_clear">Clear canvas</string>
 </resources>
