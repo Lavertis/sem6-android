@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Project4</string>
+    <string name="red">Red</string>
+    <string name="yellow">Yellow</string>
+    <string name="blue">Blue</string>
+    <string name="green">Green</string>
+    <string name="action_clear">Clear canvas</string>
+</resources>
